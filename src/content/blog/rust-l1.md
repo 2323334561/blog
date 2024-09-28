@@ -70,10 +70,10 @@ rust 的包管理工具是 [cargo](https://app.capacities.io/fcb41f3d-eb26-439e-
 
 
 📦 hello_cargo  
-┣ 📂 src  
-┃ ┗ 🦀 main.rs  
-┣ ⚙️ .gitignore  
-┗ 📜 Cargo.toml  
+ ┣ 📂 src  
+ ┃ ┗ 🦀 main.rs  
+ ┣ ⚙️ .gitignore  
+ ┗ 📜 Cargo.toml  
 
 ### 更新依赖
 
