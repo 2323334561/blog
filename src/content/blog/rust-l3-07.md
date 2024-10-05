@@ -2,7 +2,7 @@
 title: 字符串
 pubDatetime: 2024-10-1T11:30:00+08:00
 author: shushunie
-slug: rust-l3-6
+slug: rust-l3-7
 description: ""
 ---
 

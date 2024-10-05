@@ -2,7 +2,7 @@
 title: ownership 所有权
 pubDatetime: 2024-09-30T10:30:00+08:00
 author: shushunie
-slug: rust-l3-3
+slug: rust-l3-4
 description: ""
 ---
 

@@ -2,7 +2,7 @@
 title: 基础类型
 pubDatetime: 2024-09-30T10:30:00+08:00
 author: shushunie
-slug: rust-l3-2
+slug: rust-l3-3
 description: ""
 ---
 

@@ -2,7 +2,7 @@
 title: 数组与切片
 pubDatetime: 2024-09-30T10:30:00+08:00
 author: shushunie
-slug: rust-l3-5
+slug: rust-l3-6
 description: ""
 ---
 

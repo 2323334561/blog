@@ -2,7 +2,7 @@
 title: 引用
 pubDatetime: 2024-09-30T10:30:00+08:00
 author: shushunie
-slug: rust-l3-4
+slug: rust-l3-5
 description: ""
 ---
 

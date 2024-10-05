@@ -2,7 +2,7 @@
 title: 枚举和模式匹配
 pubDatetime: 2024-10-4T16:44:00+08:00
 author: shushunie
-slug: rust-l3-8
+slug: rust-l3-09
 description: ""
 ---
 
