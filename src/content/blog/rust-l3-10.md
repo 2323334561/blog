@@ -1,5 +1,5 @@
 ---
-title: 枚举和模式匹配
+title: 常见集合
 pubDatetime: 2024-10-5T16:12:00+08:00
 author: shushunie
 slug: rust-l3-10
