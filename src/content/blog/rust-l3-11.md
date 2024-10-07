@@ -22,23 +22,23 @@ Crate 可以有两种形式：
 
 `Package` 就是一个项目，因此它包含有独立的 `Cargo.toml` 文件，以及因为功能性被组织在一起的一个或多个包。一个 `Package` 只能包含**一个**库(library)类型的包，但是可以包含**多个**二进制可执行类型的包
 
-#### 举例222
+#### 举例
 
-📦 my-project
-┣ 📂 src
-┃ ┣ 🦀 main.rs
-┃ ┣ 🦀 lib.rs
-┃ ┗ 📂 bin
-┃ ┣ 🦀 main1.rs
-┃ ┗ 🦀 main2.rs
-┣ 📂 tests
-┃ ┗ 🧪 some_integration_tests.rs
-┣ 📂 benches
-┃ ┗ 🧪 simple_bench.rs
-┣ 📂 examples
-┃ ┗ 📜 simple_example.rs
-┣ ⚙️ Cargo.lock
-┗ 📜 Cargo.toml
+📦 my-project\
+ ┣ 📂 src\
+ ┃ ┣ 🦀 main.rs\
+ ┃ ┣ 🦀 lib.rs\
+ ┃ ┗ 📂 bin\
+ ┃ ┣ 🦀 main1.rs\
+ ┃ ┗ 🦀 main2.rs\
+ ┣ 📂 tests\
+ ┃ ┗ 🧪 some_integration_tests.rs\
+ ┣ 📂 benches\
+ ┃ ┗ 🧪 simple_bench.rs\
+ ┣ 📂 examples\
+ ┃ ┗ 📜 simple_example.rs\
+ ┣ ⚙️ Cargo.lock\
+ ┗ 📜 Cargo.toml
 
 - 唯一库包：`src/lib.rs`
 - 默认二进制包：`src/main.rs`，编译后生成的可执行文件与 `Package` 同名

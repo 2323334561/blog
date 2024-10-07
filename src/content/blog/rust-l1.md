@@ -68,10 +68,10 @@ rust 的包管理工具是 cargo 和 npm 类似，它是不需要单独下载的
 
 使用 new 命令后会生成一个简单项目，其中 Cargo.toml 类似 package.json
 
-📦 hello_cargo  
- ┣ 📂 src  
- ┃ ┗ 🦀 main.rs  
- ┣ ⚙️ .gitignore  
+📦 hello_cargo\
+ ┣ 📂 src\
+ ┃ ┗ 🦀 main.rs\
+ ┣ ⚙️ .gitignore\
  ┗ 📜 Cargo.toml
 
 ### 更新依赖
