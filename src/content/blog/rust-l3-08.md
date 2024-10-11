@@ -2,7 +2,7 @@
 title: 结构体
 pubDatetime: 2024-10-3T10:40:00+08:00
 author: shushunie
-slug: rust-l3-9
+slug: rust-l3-08
 description: ""
 ---
 
