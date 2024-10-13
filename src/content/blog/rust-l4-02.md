@@ -6,42 +6,6 @@ slug: rust-l4-02
 description: ""
 ---
 
-## 特征 Trait
-
-Rust 中并没有类的设计，比较接近的是之前介绍过的 `Struct`，搭配 `impl` 可以为 `Struct` 添加一些功能，使用起来就有点像其他编程语言里的类（class）
-
-假设我写了一个 `Cat` 类和一个 `Dog` 类，不同的类通常会有各自的行为，但如果它们有共同的行为的话，在面向对象的世界观里，我们通常会另外创建一个 `Animal` 类，把共同的行为写在里面，然后让 `Cat` 和 `Dog` 类去继承它
-
-面向对象中的继承虽然用起来很方便，但也有它的问题，例如：假设有一个 `Bird` 类，它有飞行功能。如果我想让 `Cat` 也会飞，简单的做法就是让 `Cat` 继承 `Bird` 类。但是，仅仅为了能够飞就必须成为 `Bird` 的后代吗？为了避免这种继承的问题，有些编程语言提供了模块（Module）或接口（Interface）的设计。例如，我们可以把飞行的功能写在飞行模块里，`Cat` 只要挂上这个飞行模块就能飞，而且它依然是 `Cat`，变成一只飞天猫。如果 `Dog` 或 `Fish` 也想要会飞，它们也可以自己拿去用，大家都能开心地做自己，而不需要成为 `Bird` 的后代
-
-Rust 中提供类似接口（interface）或抽象类（abstract class）的概念，即 `Trait`。它允许我们在 Rust 中定义一些行为，然后将这些行为应用到不同的类型上。具体用法如下
-
-```rust
-struct Cat {
-    name: String,
-    age: u8
-}
-
-trait Flyable {
-    // 默认方法
-    fn fly(&self) {
-      println!("起飞 🛫");
-    };
-
-    // 抽象方法
-    fn speed(&self) -> f32;
-}
-
-impl Flyable for Cat {
-    fn speed(&self) -> f32 {
-        15.0
-    }
-}
-
-let kitty = Cat { name: String::from("Kitty"), age: 18 };
-kitty.fly()
-```
-
 ## 泛型 Generics
 
 我们在编程中，经常有这样的需求：用同一功能的函数处理不同类型的数据，例如两个数的加法，无论是整数还是浮点数，甚至是自定义类型，都能进行支持。在不支持泛型的编程语言中，通常需要为每一种类型编写一个函数
