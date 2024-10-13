@@ -2,7 +2,7 @@
 title: Macro 宏编程
 pubDatetime: 2024-10-13T11:42:00+08:00
 author: shushunie
-slug: rust-l4-04
+slug: rust-l4-05
 description: ""
 ---
 
