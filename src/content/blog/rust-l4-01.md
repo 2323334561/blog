@@ -64,6 +64,129 @@ enum List {
 
 使用 box，在栈上仅存储第一个节点，后续递归产生的节点将放入堆内存存储。对于 rust 编译器来讲，List 类型的大小在栈上只有一层，占用大小是可以确定的
 
-### trait 相关
+## Rc<T>
 
-还没学到，这里不关注
+Rust 所有权机制要求一个值只能有一个所有者，在大多数情况下，都没有问题，但是考虑以下情况：
+
+- 在图数据结构中，多个边可能会拥有同一个节点，该节点直到没有边指向它时，才应该被释放清理
+
+- 在多线程中，多个线程可能会持有同一个数据，但受限于 Rust 的安全机制，无法同时获取该数据的可变引用
+
+为了解决此类问题，Rust 在所有权机制之外又引入了额外的措施来简化相应的实现：通过引用计数的方式，允许一个数据资源在同一时刻拥有多个所有者。每增加一个引用时，计数加一，离开作用域时减一，当引用计数为 0 时执行析构函数
+
+```rust
+use std::rc::Rc;
+fn main() {
+    let a = Rc::new(String::from("hello, world"));
+    let b = Rc::clone(&a);
+
+    assert_eq!(2, Rc::strong_count(&a));
+    assert_eq!(Rc::strong_count(&a), Rc::strong_count(&b))
+}
+```
+
+以上代码我们使用 `Rc::new` 创建了一个新的 `Rc<String>` 智能指针并赋给变量 `a`，该指针指向底层的字符串数据。智能指针 `Rc<T>` 在创建时还会将引用计数加 1，此时获取引用计数的关联函数 `Rc::strong_count` 返回的值将是 `1`
+
+接着，我们又使用 `Rc::clone` 克隆了一份智能指针 `Rc<String>`，并将该智能指针的引用计数增加到 `2`。`a` 和 `b` 是同一个智能指针的两个副本，因此通过它们两个获取引用计数的结果都是 `2`
+
+这里的 `clone` 仅仅复制了智能指针并增加了引用计数，并没有克隆底层数据，因此 `a` 和 `b` 是共享了底层的字符串 `s`，这种复制效率是非常高的
+
+## Cell 和 RefCell
+
+之前在学习借用的是有有了解到，只能同时存在一个可变借用，和多个不可变借用。这个规则可能会导致某些场景无法
+
+#### Cell
+
+```rust
+// 编译成功
+let x = Cell::new(1);
+let y = x.get();
+let z = x.get();
+x.set(2);
+y.set(3);
+z.set(4);
+println!("{}", x.get());
+
+// 编译失败
+let mut x = 1;
+let y = &mut x;
+let z = &mut x;
+x = 2;
+*y = 3;
+*z = 4;
+println!("{}", x);
+```
+
+以上代码展示了 `Cell` 的基本用法。同时有两个变量能能读取并使用 `x` 的值，不使用 Cell 的情况下实现这个功能需要两个可变借用，这违背了 Rust 的借用规则
+
+如果你尝试在 `Cell` 中存放`String`，编译器会立刻报错，因为 `String` 没有实现 `Copy` 特征
+
+#### RefCell
+
+`Cell` 类型针对的是实现了 `Copy` 特征的值类型，因此在实际开发中，`Cell` 使用的并不多，因为我们要解决的往往是可变、不可变引用共存导致的问题，此时就需要借助于 `RefCell` 来达成目的
+
+#### 内部可变性
+
+`RefCell` 具有内部可变性，即能够对一个不可变的值进行可变借用
+
+```rust
+fn main() {
+    let x = 5; // 变量 x 不可变
+    let y = &mut x; // 报错
+}
+```
+
+我们不能对一个不可变的值进行可变借用，这会破坏 Rust 的安全性保证，相反，你可以对一个可变值进行不可变借用。然而在某些场景中，一个值可以在其方法内部被修改，同时对于其它代码不可变，是很有用的
+
+```rust
+// 定义在外部库中的特征
+pub trait Messenger {
+    fn send(&self, msg: String);
+}
+
+// 我们的代码中的数据结构和实现
+struct MsgQueue {
+    msg_cache: Vec<String>,
+}
+
+impl Messenger for MsgQueue {
+    fn send(&self, msg: String) {
+        self.msg_cache.push(msg)
+    }
+}
+```
+
+外部库中定义了一个消息发送器特征 `Messenger`，它只有一个发送消息的功能：`fn send(&self, msg: String)`，因为发送消息不需要修改自身，因此原作者在定义时，使用了 `&self` 的不可变借用
+
+我们要在自己的代码中使用该特征实现一个异步消息队列，出于性能的考虑，消息先写到本地缓存(内存)中，然后批量发送出去，因此在 `send` 方法中，需要将消息先行插入到本地缓存 `msg_cache` 中，但该 `send` 方法的签名是 `&self`，而且定义在外部库我们无法修改
+
+这种情况下，我们可以通过 `RefCell` 包裹 `msg_cache`，使用 `borrow_mut` 获取数据后进行修改。以此来避开 Rust 的编译器检查
+
+```rust
+pub struct MsgQueue {
+    msg_cache: RefCell<Vec<String>>,
+}
+
+impl Messenger for MsgQueue {
+    fn send(&self, msg: String) {
+        self.msg_cache.borrow_mut().push(msg)
+    }
+}
+
+fn main() {
+    let mq = MsgQueue {
+        msg_cache: RefCell::new(Vec::new()),
+    };
+    mq.send("hello, world".to_string());
+}
+```
+
+## 所有权规则与智能指针
+
+| Rust 规则                            | 智能指针带来的额外规则                  |
+| :----------------------------------- | :-------------------------------------- |
+| 一个数据只有一个所有者               | `Rc/Arc`让一个数据可以拥有多个所有者    |
+| 要么多个不可变借用，要么一个可变借用 | `RefCell`实现编译期可变、不可变引用共存 |
+| 违背规则导致**编译错误**             | 违背规则导致**运行时**`panic`           |
+
+`Rc/Arc` 和 `RefCell` 合在一起，解决了 Rust 中严苛的所有权和借用规则带来的某些场景下难以编写代码的问题，但它们只是开放了 Rust 编译器的规则限制，并不能使会导致错误的代码顺利运行。例如 `RefCell` 实际上并没有解决可变引用和引用可以共存的问题，只是将报错从编译期推迟到运行时，从编译器错误变成了 `panic` 异常
