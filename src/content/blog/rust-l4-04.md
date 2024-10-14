@@ -42,6 +42,25 @@ let kitty = Cat { name: String::from("Kitty"), age: 18 };
 kitty.fly()
 ```
 
+#### 关联类型
+
+关联类型通常与 trait 一起使用，通过 `type` 关键字在 trait 中定义，例如
+
+```rust
+trait Iterator {
+    type Item; // 关联类型
+
+    fn next(&mut self) -> Option<Self::Item>; // 使用关联类型
+}
+
+```
+
+在这个例子中，`Iterator` trait 定义了一个关联类型 `Item`，表示迭代器生成的值的类型，`Self::Item` 表示实现者要提供的具体类型
+
+关联类型的效果有点类似泛型，它们的主要区别在于使用场景不同。泛型适合用于希望同一个逻辑适用于多种类型时。关联类型则适合用于某个 trait 的实现对某一类型有固定的要求，例如，Rust 的 `Iterator` trait
+
+## 常见特性
+
 #### Deref 解引用
 
 常规引用是一个指针类型，包含了目标数据存储的内存地址。对常规引用使用 `*` 操作符，就可以通过解引用的方式获取到内存地址对应的数据值
