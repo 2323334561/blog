@@ -118,11 +118,11 @@ fn handle_response(request_vec: Vec<String>, mut stream: TcpStream) {
 
 ---
 
-[image](https://app.capacities.io/fcb41f3d-eb26-439e-860c-4d11e4be6bfb/51c272dc-55af-453d-a95f-c85b15dc773a)
+![hello](../../assets/images/web-server/hello_html.png)
 
 ---
 
-[image](https://app.capacities.io/fcb41f3d-eb26-439e-860c-4d11e4be6bfb/654ee0b8-1fe3-4ce3-88a9-5833d5ad8b33)
+![error](../../assets/images/web-server/error_html.png)
 
 ---
 
@@ -302,11 +302,11 @@ fn main() {
 
 ---
 
-[image](https://app.capacities.io/fcb41f3d-eb26-439e-860c-4d11e4be6bfb/be3481b5-ef6a-48d2-bb68-9530dce6a2a2)
+![image](../../assets/images/web-server/threadpool_disable.png)
 
 ---
 
-[image](https://app.capacities.io/fcb41f3d-eb26-439e-860c-4d11e4be6bfb/6a25730e-7e52-4c9d-9974-83f01b9b7b84)
+![image](../../assets/images/web-server/threadpool_enable.png)
 
 ---
 
