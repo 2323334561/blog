@@ -8,15 +8,8 @@ description: ""
 
 ## 项目初始化
 
-### 基本命令
-以下是一些常用的 Anchor 命令：
-
-- **`anchor init <project_name>`**：创建项目。
-- **`anchor test`**：执行测试代码。
-- **`anchor deploy`**：部署项目。
-
 ### 项目结构
-执行命令 **`anchor init <project_name>`** 初始化项目后，项目结构如下：
+执行命令 **`anchor init <project_name>`** 初始化项目，项目结构如下：
 
 ```
 .anchor/               # Anchor 项目的配置目录
@@ -40,6 +33,13 @@ package.json          # 项目依赖管理文件
 tsconfig.json         # TypeScript 配置文件
 yarn.lock             # Yarn 依赖锁定文件
 ```
+
+### 基本命令
+常用的 Anchor 命令：
+
+- **`anchor init <project_name>`**：创建项目。
+- **`anchor test`**：执行测试代码。
+- **`anchor deploy`**：部署项目。
 
 ### 依赖问题
 
@@ -77,7 +77,7 @@ cluster = "devnet"
 
 ## Todo 程序代码实现
 
-以下是一个简单的 Todo 程序实现：
+一个简单的 Todo 程序实现：
 
 ```rust
 #[program]
