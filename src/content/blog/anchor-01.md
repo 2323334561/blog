@@ -3,7 +3,7 @@ title: anchor 入门：项目创建和测试
 pubDatetime: 2024-12-28T10:12:00+08:00
 author: shushunie
 slug: anchor-01
-description: "在本篇博客中，我们将详细介绍如何使用 Anchor 框架来构建、测试和部署 Solana 程序"
+description: "介绍如何使用 Anchor 框架来构建、测试和部署 Solana 程序"
 ---
 
 ## 创建项目

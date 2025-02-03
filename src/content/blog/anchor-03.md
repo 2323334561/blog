@@ -3,7 +3,7 @@ title: 社交应用：创建用户 profile 账户
 pubDatetime: 2025-1-3T15:33:00+08:00
 author: shushunie
 slug: anchor-03
-description: "这篇文章，我们将实现一个简单的社交平台用户创建功能"
+description: "实现一个简单社交平台的用户创建功能"
 ---
 
 ## 创建用户
