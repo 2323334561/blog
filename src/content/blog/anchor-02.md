@@ -1,6 +1,6 @@
 ---
 title: anchor 入门：pda 的用法
-pubDatetime: 2024-1-1T10:56:00+08:00
+pubDatetime: 2025-1-1T10:56:00+08:00
 author: shushunie
 slug: anchor-02
 description: ""
