@@ -130,14 +130,7 @@ if pda != pda_account.key.clone() {
 }
 ```
 
-`find_program_address` 用于生成 程序派生地址（PDA），接受两个参数
-
-    * seeds: &[&[u8]]
-    * program_id: &Pubkey
-
-种子的类型是多个字节数组切片(&[u8])，`user_account.key` 的类型是 `PubKey`，`as_ref()` 可以将 `Pubkey` 转换为 `&[u8]`。`as_bytes()` 同理，可以将字符串转为 `&[u8]`
-
-程序派生地址（PDA） 地址作为数据存储地址使用，可以看作键值对中的 key
+程序派生地址（PDA）地址作为数据存储地址使用，可以看作键值对中的 key
 
 ![alt text](../../assets/images/solana-l1-05/pda.svg)
 
@@ -148,6 +141,15 @@ if pda != pda_account.key.clone() {
     3. 单个帖子数据（帖子的具体内容）
 
 特定的一组种子会形成唯一的 PDA，而 PDA 作为 key 需要和存储的数据一一对应，所以用哪些字段作为种子来生成 pda 只要满足唯一性即可。例如用于存储用户数据的 PDA 需要满足不同用户生成的 PDA 各不相同，因此可以直接使用 `user_account.key` 作为种子。用户帖子数据也可以基于 `user_account.key` 生成 PDA，于是为了区分用户数据和用户帖子数据，我们添加一个 seed 字段。即用户数据的种子采用 `user_account.key + profile`，用户帖子数据的种子采用 `user_account.key + post`
+
+`find_program_address` 用于生成 程序派生地址（PDA），接受两个参数
+
+    * seeds: &[&[u8]]
+    * program_id: &Pubkey
+
+种子的类型是多个字节数组切片(&[u8])，`user_account.key` 的类型是 `PubKey`，`as_ref()` 可以将 `Pubkey` 转换为 `&[u8]`。`as_bytes()` 同理，可以将字符串转为 `&[u8]`
+
+Solana 要求 PDA 不能有私钥，否则程序本身就可以对 PDA 进行签名（违反了 Solana 账户权限模型）。依据提供的种子可能会生成一个可签名地址，这就会导致 PDA 无效。所以 `find_program_address` 会尝试不同的 `bump` 值（从 255 递减），直到找到一个 无法签名的 PDA
 
 #### 计算占用空间
 

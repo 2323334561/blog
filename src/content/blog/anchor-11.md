@@ -8,14 +8,12 @@ description: ""
 
 ## 基本思路
 
-假设存在一种 ETF，包含 10% token A + 80% token B
-
-当前价格：
+假设存在一种 ETF，包含 10% token A + 80% token B，并且当前价格：
 
 - 1 A = 1.1 SOL
 - 1 B = 1.3 SOL
 
-用户计划购买 100 份 ETF，需要花费
+用户计划购买 100 份 ETF，需要花费：
 
 $100 \times 10\% \times 1.1 + 100 \times 90\% \times 1.3 = 128（SOL）$
 
